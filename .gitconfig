@@ -1,0 +1,61 @@
+[user]
+	name = $FULL_NAME
+	email = $EMAIL
+[core]
+	editor = vim
+	pager = diff-so-fancy | less --tabs=1,5 -R
+[commit]
+	template = ~/.git-commit-template.txt 
+
+[color "diff"]
+	meta = "yellow bold"
+	commit = "green bold"
+	frag = "magenta bold"
+	old = "red bold"
+	new = "green bold"
+	whitespace = "red reverse"
+[color "diff-highlight"]
+	oldNormal = "red bold"
+	oldHighlight = "red bold 52"
+	newNormal = "green bold"
+	newHighlight = "green bold 22"
+[color "branch"]
+	current = yellow reverse
+	local = yellow
+	remote = green
+[color "status"]
+	added = yellow
+	changed = green
+	untracked = cyan
+[diff-so-fancy]
+	markEmptyLines = false
+	changeHunkIndicators = false
+	stripLeadingSymbols = false
+	useUnicodeRuler = false
+[diff]
+	renames = copies
+	compactionHeuristic = true
+	tool = meld
+[alias]
+	st = status
+	cm = checkout master
+	ck = checkout
+	gp = push
+	edit = commit --amend
+	pushforce = push --force-with-lease
+	rebase = pull --rebase
+	contributors = shortlog --summary --numbered
+	lg = log --color --graph --abbrev-commit --decorate --date=relative --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --all
+	undo = reset HEAD~
+	Undo = reset HEAD~ --hard
+[difftool "vscode"]
+	cmd = "meld --wait --diff  "
+[difftool]
+    prompt = false
+[difftool "meld"]
+    cmd = meld "$LOCAL" "$REMOTE"
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
