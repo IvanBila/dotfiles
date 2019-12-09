@@ -1,11 +1,13 @@
 [user]
 	name = $FULL_NAME
-	email = $EMAIL
+	email = $PERSONAL_EMAIL
+	signingkey = $SIGNING_KEY
 [core]
 	editor = vim
 	pager = diff-so-fancy | less --tabs=1,5 -R
 [commit]
 	template = ~/.git-commit-template.txt 
+	gpgsign = true
 
 [color "diff"]
 	meta = "yellow bold"
@@ -43,11 +45,10 @@
 	gp = push
 	edit = commit --amend
 	pushforce = push --force-with-lease
-	rebase = pull --rebase
+	widas = push --force-with-lease
 	contributors = shortlog --summary --numbered
 	lg = log --color --graph --abbrev-commit --decorate --date=relative --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --all
-	undo = reset HEAD~
-	Undo = reset HEAD~ --hard
+	undo = reset HEAD~ --soft
 [difftool "vscode"]
 	cmd = "meld --wait --diff  "
 [difftool]
@@ -59,3 +60,5 @@
 	process = git-lfs filter-process
 	required = true
 	clean = git-lfs clean -- %f
+[gpg]
+	program = gpg
