@@ -1,23 +1,39 @@
-
 set nocompatible
+filetype on
 
-so ~/.vim/plugins.vim
+source ~/.vim/plugins.vim
 
 syntax enable
 set number
 set backspace=indent,eol,start
+set smartindent
+set autoindent
+set showmatch
+
 let mapleader = ','
 
 "-------------------- Viusals ------------------"
-colorscheme atom-dark-256
+"colorscheme gruvbox"
+"colorscheme atom-dark-256"
+colorscheme seoul256
+"color dracula"
+
+
 "-------------------- Mappings ------------------"
  nmap ,ev :e ~/.vimrc<cr>
+ nmap ,pl :e ~/.vim/plugins.vim<cr>
  nmap <Leader><space> :nohlsearch<cr>
  nmap <c-R> :CtrlPBufTag<cr>
+ nmap <Leader>p :tabprevious<cr>
+ nmap <Leader>n :tabnext<cr>
+ nmap <Leader>e :tabedit 
+ nmap <Leader>c :tabclose<cr>
+ 
 
 "---------- Searching ---------"
 set hlsearch
 set incsearch
+
 
 "------ Auto Commands ------"
 
@@ -34,5 +50,3 @@ function! IPhpExpandClass()
 endfunction
 autocmd FileType php inoremap <Leader>n <Esc>:call IPhpExpandClass()<CR>
 autocmd FileType php noremap <Leader>n :call PhpExpandClass()<CR>
-
-
