@@ -1,0 +1,22 @@
+# Short (50 chars. max.) summary. Clear line with d$
+# prefixes: feat, fix, docs, style, refactor, test, chore
+
+# (keep blank line above)
+# Make sure that .vimrc has `set modelines=5` so modeline bellow works
+# vim:set ft=gitcommit fenc=utf-8 ff=unix expandtab ts=2 tw=72 spell:
+
+# Body (72 chars max. per line)
+#1. Why is this change necessary?
+
+#2. How does it address the issue?
+
+#3. What side effects does this change have?
+
+# Close issues via commit message (close, fix, resolve). Repeat if many
+# Closes: #
+# See also: #
+
+
+
+# Multiple authors
+# Co-authored-by: name <email>
