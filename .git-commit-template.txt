@@ -1,5 +1,5 @@
-# Short (50 chars. max.) summary. Clear line with d$
-# prefixes: feat, fix, docs, style, refactor, test, chore
+# Short (50 chars. max.) summary.
+# prefixes: feat, fix, docs, style, refactor, test, chore, revert
 
 # (keep blank line above)
 # Make sure that .vimrc has `set modelines=5` so modeline bellow works
@@ -16,7 +16,11 @@
 # Closes: #
 # See also: #
 
-
-
 # Multiple authors
 # Co-authored-by: name <email>
+
+# Reference a reviewer
+# Reviewed-by
+
+# Reference an issue
+# Refs #249
