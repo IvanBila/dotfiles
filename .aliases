@@ -1,0 +1,20 @@
+# OS Specific
+alias :q='exit'
+
+# GIT
+alias gs='git status'
+alias ga='git add'
+alias gp="git push"
+alias gpl="git pull"
+alias gc="git checkout"
+alias gcm="git checkout master && git pull"
+alias wip='git add . && git commit -m"WIP"'
+alias gd='git diff'
+
+# LARAVEL
+alias art='php artisan'
+alias cda='composer dump-autoload -o'
+alias mmo='php artisan make:model'
+alias ms='php artisan make:seed'
+alias mpr='php artisan make:provider'
+alias rl='php artisan route:list'
