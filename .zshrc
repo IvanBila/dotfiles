@@ -1,48 +1,43 @@
-	#if [ "$TMUX" = "" ]; then tmux; fi
-	# If you come from bash you might have to change your $PATH.
-	# export PATH=$HOME/bin:/usr/local/bin:$PATH
+#if [ "$TMUX" = "" ]; then tmux; fi
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-	# Path to your oh-my-zsh installation.
-	  export ZSH="/home/ux/.oh-my-zsh"
-
-	# Set name of the theme to load --- if set to "random", it will
-	# load a random theme each time oh-my-zsh is loaded, in which case,
-	# to know which specific one was loaded, run: echo $RANDOM_THEME
-	# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-	ZSH_THEME="spaceship"
-	 SPACESHIP_PROMPT_ORDER=(
-	    time          # Time stampts section
-	    user          # Username section
-	    dir           # Current directory section
-	    host          # Hostname section
-	    git           # Git section (git_branch + git_status)
-	    hg            # Mercurial section (hg_branch  + hg_status)
-	    package       # Package version
-	    node          # Node.js section
-	    ruby          # Ruby section
-	    elixir        # Elixir section
-	    golang        # Go section
-	    php           # PHP section
-	    rust          # Rust section
-	    haskell       # Haskell Stack section
-	    julia         # Julia section
-	    docker        # Docker section
-	    aws           # Amazon Web Services section
-	    venv          # virtualenv section
-	    conda         # conda virtualenv section
-	    pyenv         # Pyenv section
-	    dotnet        # .NET section
-	    ember         # Ember.js section
-	    kubecontext   # Kubectl context section
-	    terraform     # Terraform workspace section
-	    exec_time     # Execution time
-	    line_sep      # Line break
-	    battery       # Battery level and status
-	    vi_mode       # Vi-mode indicator
-	    jobs          # Background jobs indicator
-	    exit_code     # Exit code section
-	    char          # Prompt character
-  )
+# Path to your oh-my-zsh installation.
+export ZSH="/home/ux/.oh-my-zsh"
+ZSH_THEME="spaceship"
+SPACESHIP_PROMPT_ORDER=(
+  time          # Time stampts section
+  user          # Username section
+  dir           # Current directory section
+  host          # Hostname section
+  git           # Git section (git_branch + git_status)
+  hg            # Mercurial section (hg_branch  + hg_status)
+  package       # Package version
+  node          # Node.js section
+  ruby          # Ruby section
+  elixir        # Elixir section
+  golang        # Go section
+  php           # PHP section
+  rust          # Rust section
+  haskell       # Haskell Stack section
+  julia         # Julia section
+  docker        # Docker section
+  aws           # Amazon Web Services section
+  venv          # virtualenv section
+  conda         # conda virtualenv section
+  pyenv         # Pyenv section
+  dotnet        # .NET section
+  ember         # Ember.js section
+  kubecontext   # Kubectl context section
+  terraform     # Terraform workspace section
+  exec_time     # Execution time
+  line_sep      # Line break
+  battery       # Battery level and status
+  vi_mode       # Vi-mode indicator
+  jobs          # Background jobs indicator
+  exit_code     # Exit code section
+  char          # Prompt character
+)
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
@@ -153,20 +148,15 @@ alias ms='php artisan make:seed'
 alias mpr='php artisan make:provider'
 alias rl='php artisan route:list'
 
-# PHP
-alias phinx='./vendor/bin/phinx'
 
 # Javascript
 alias js='node'
 
 [[ -s $HOME/.nvm/nvm.sh ]] && . $HOME/.nvm/nvm.sh
 
-# emprego.co.mz
-alias emprego='phpstorm ~/Documents/repositories/emprego.co.mz'
-fpath=($fpath "/home/ux/.zfunctions")
 
-  # Set Spaceship ZSH as a prompt
-  autoload -U promptinit; promptinit
-  prompt spaceship
+# Set Spaceship ZSH as a prompt
+autoload -U promptinit; promptinit
+prompt spaceship
 
 eval $(thefuck --alias)
