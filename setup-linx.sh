@@ -159,33 +159,3 @@ sudo apt-get install sublime-text
 
 # Jetbrains ToolBox
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
