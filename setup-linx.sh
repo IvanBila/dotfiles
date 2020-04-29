@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Commecing stup"
+echo "Commecing setup"
 
 
 
