@@ -91,6 +91,9 @@ sudo apt install openssl php-common php-curl php-json php-mbstring php-mysql php
 # PHP REPL
 cd ~ && wget https://psysh.org/psysh && sudo mv /bin/psysh
 
+# Composer Alternative
+ composer g require psy/psysh:@stable 
+
 # COMPOSER
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 HASH="$(wget -q -O - https://composer.github.io/installer.sig)"
