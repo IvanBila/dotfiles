@@ -88,6 +88,8 @@ sudo apt install php7.4 php7.4-common php7.4-opcache php7.4-cli php7.4-gd php7.4
 sudo apt-get install -y php7.4 libapache2-mod-php7.4 php7.4-cli php7.4-common php7.4-mbstring php7.4-gd php7.4-intl php7.4-xml php7.4-mysql php7.4-mcrypt php7.4-zip php7.4-zip openssl php-common php-curl php-json php-mbstring php-mysql php-xml php-zip
 sudo apt install openssl php-common php-curl php-json php-mbstring php-mysql php-xml php-zip
 
+# PHP REPL
+cd ~ && wget https://psysh.org/psysh && sudo mv /bin/psysh
 
 # COMPOSER
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
