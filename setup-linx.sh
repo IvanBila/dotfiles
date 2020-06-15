@@ -89,7 +89,7 @@ sudo apt-get install -y php7.4 libapache2-mod-php7.4 php7.4-cli php7.4-common ph
 sudo apt install openssl php-common php-curl php-json php-mbstring php-mysql php-xml php-zip
 
 # PHP REPL
-cd ~ && wget https://psysh.org/psysh && sudo mv /bin/psysh
+cd ~ && wget https://psysh.org/psysh && sudo mv psysh /bin/psysh
 
 # Composer Alternative
  composer g require psy/psysh:@stable 
