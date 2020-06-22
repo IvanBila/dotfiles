@@ -161,3 +161,10 @@ sudo apt-get install apt-transport-https
 echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
 sudo apt-get update -y
 sudo apt-get install sublime-text
+
+# TELEGRAM
+wget https://updates.tdesktop.com/tlinux/tsetup.1.1.23.tar.xz
+tar -xf tsetup.1.1.23.tar.xz 
+cd Telegram/
+sudo mv Telegram /opt/telegram
+sudo ln -sf /opt/telegram/Telegram /usr/bin/telegram
