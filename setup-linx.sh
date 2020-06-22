@@ -168,3 +168,8 @@ tar -xf tsetup.1.1.23.tar.xz
 cd Telegram/
 sudo mv Telegram /opt/telegram
 sudo ln -sf /opt/telegram/Telegram /usr/bin/telegram
+
+# SIGNAL
+curl -s https://updates.signal.org/desktop/apt/keys.asc | sudo apt-key add -
+echo "deb [arch=amd64] https://updates.signal.org/desktop/apt xenial main" | sudo tee -a /etc/apt/sources.list.d/signal-xenial.list
+sudo apt update && sudo apt install signal-desktop
