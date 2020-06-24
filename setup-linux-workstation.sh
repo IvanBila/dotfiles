@@ -188,3 +188,17 @@ sudo apt-get purge mysql-server mysql-client mysql-common mysql-server-core-* my
 sudo rm -rf /etc/mysql /var/lib/mysql
 sudo apt-get autoremove
 sudo apt-get autoclean
+
+# Set PHP version manually
+
+## Apache
+sudo a2dismod php5.6
+sudo a2enmod php7.3
+sudo service apache2 restart
+
+## Command Line
+sudo update-alternatives --set php /usr/bin/php7.3
+sudo update-alternatives --set phar /usr/bin/phar7.3
+sudo update-alternatives --set phar.phar /usr/bin/phar.phar7.3
+sudo update-alternatives --set phpize /usr/bin/phpize7.3
+sudo update-alternatives --set php-config /usr/bin/php-config7.3
