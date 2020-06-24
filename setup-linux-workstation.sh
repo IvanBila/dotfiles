@@ -177,6 +177,12 @@ sudo apt update && sudo apt install signal-desktop
 # ZSH
 chsh -s $(which zsh)
 
+# Install Myserver
+sudo apt install mysql-server -y
+
+# Install MariaDB
+sudo apt install mariadb-server
+
 # Uninstall Mysql 
 sudo apt-get purge mysql-server mysql-client mysql-common mysql-server-core-* mysql-client-core-*
 sudo rm -rf /etc/mysql /var/lib/mysql
