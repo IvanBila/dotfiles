@@ -183,6 +183,9 @@ sudo apt install mysql-server -y
 # Install MariaDB
 sudo apt install mariadb-server
 
+# Mycli MYSQL/MariaDB client
+sudo apt-get install mycli
+
 # Uninstall Mysql 
 sudo apt-get purge mysql-server mysql-client mysql-common mysql-server-core-* mysql-client-core-*
 sudo rm -rf /etc/mysql /var/lib/mysql
