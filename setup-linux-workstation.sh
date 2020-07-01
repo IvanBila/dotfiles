@@ -2,8 +2,6 @@
 
 echo "Commecing setup"
 
-
-
 sudo apt update -y && sudo apt upgrade -y
 sudo apt install xclip git curl tmux apache2 net-tools ubuntu-restricted-extras software-properties-common build-essential openssl apt-transport-https wget vim -y
 
@@ -104,12 +102,10 @@ composer --version
 # LARAVEL
 composer global require laravel/installer
 
-
 # Golang
 sudo add-apt-repository ppa:longsleep/golang-backports
 sudo apt update
 sudo apt install golang-go
-
 
 # Gradle
 wget https://services.gradle.org/distributions/gradle-5.0-bin.zip -P /tmp
@@ -129,14 +125,6 @@ lsb_release -d
 cat /etc/issue
 cat /etc/os-release
 hostnamectl
-
-
-# MYSQL
-curl -OL https://dev.mysql.com/get/mysql-apt-config_0.8.13-1_all.deb
-dpkg -i mysql-apt-config_0.8.10-1_all.deb
-sudo apt update
-sudo apt install mysql-server
-
 
 # PIP3
 sudo apt update
