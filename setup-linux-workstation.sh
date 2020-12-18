@@ -4,6 +4,7 @@ echo "Commecing setup"
 
 sudo apt update -y && sudo apt upgrade -y
 sudo apt install xclip git curl tmux apache2 net-tools ubuntu-restricted-extras software-properties-common build-essential openssl apt-transport-https wget vim -y
+sudo apt-get install neofetch
 
 # Install Communication and Productivity apps Via Snap
 sudo apt install snapd
