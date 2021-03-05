@@ -3,7 +3,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/$(($USER))/.oh-my-zsh"
+export ZSH="~/.oh-my-zsh"
 ZSH_THEME="spaceship"
 SPACESHIP_PROMPT_ORDER=(
   time          # Time stampts section
