@@ -53,7 +53,9 @@ nvm install 8
 nvm install 10
 nvm install 12
 nvm install 13
-nvm use 10
+nvm install 14
+nvm install 15
+nvm use 14
 
 
 # BROWSERS
