@@ -22,8 +22,9 @@ sudo snap install chromium
 cd ~/Downloads
 git clone https://github.com/ZulwiyozaPutra/SF-Mono-Font.git
 cd SF-Mono-Font
-mv *.otf ~/.local/share/fonts
 mkdir -p ~/.local/share/fonts
+mv *.otf ~/.local/share/fonts
+
 fc-cache -f -v
 
 
