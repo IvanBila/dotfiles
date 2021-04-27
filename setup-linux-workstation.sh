@@ -35,6 +35,10 @@ sudo update-alternatives --set java /usr/lib/jvm/jdk1.8/bin/java
 sudo update-alternatives --set javac /usr/lib/jvm/jdk1.8/bin/javac
 
 
+# Android ADB & FastBoot
+sudo apt install android-tools-adb android-tools-fastboot
+
+
 # https://www.vultr.com/docs/how-to-manually-install-java-8-on-ubuntu-16-04
 # https://linuxize.com/post/how-to-set-and-list-environment-variables-in-linux/
 #https://askubuntu.com/questions/175514/how-to-set-java-home-for-java
