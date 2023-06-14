@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Commecing setup"
+echo "Commencing Setup"
 
 sudo apt update -y && sudo apt upgrade -y
 sudo apt install xclip git curl tmux apache2 net-tools ubuntu-restricted-extras software-properties-common build-essential openssl apt-transport-https wget vim -y
