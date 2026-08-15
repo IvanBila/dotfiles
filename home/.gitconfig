@@ -1,0 +1,147 @@
+# Tracked git configuration. Identity and signing keys live in
+# ~/.gitconfig.local, which install.sh generates and git never publishes.
+
+[include]
+	path = ~/.gitconfig.local
+
+[core]
+	editor = vim
+	excludesfile = ~/.gitignore_global
+	autocrlf = input
+	# Detect a filesystem that ignores case before it corrupts a rename.
+	precomposeunicode = true
+	# delta when it is installed, plain less otherwise.
+	pager = "command -v delta >/dev/null 2>&1 && delta || less --tabs=4 -RFX"
+
+[init]
+	defaultBranch = main
+
+[commit]
+	template = ~/.git-commit-template.txt
+	verbose = true
+
+[pull]
+	rebase = true
+
+[push]
+	default = current
+	autoSetupRemote = true
+	followTags = true
+
+[fetch]
+	prune = true
+	pruneTags = true
+	fsckobjects = true
+
+[rebase]
+	autoStash = true
+	autoSquash = true
+	updateRefs = true
+
+[merge]
+	conflictstyle = diff3
+	tool = meld
+
+[diff]
+	algorithm = histogram
+	renames = copies
+	colorMoved = default
+	tool = meld
+
+[difftool]
+	prompt = false
+[difftool "meld"]
+	cmd = meld "$LOCAL" "$REMOTE"
+[mergetool]
+	prompt = false
+	keepBackup = false
+
+# Reuse recorded conflict resolutions: resolve a rebase conflict once.
+[rerere]
+	enabled = true
+	autoupdate = true
+
+[branch]
+	sort = -committerdate
+
+[tag]
+	sort = version:refname
+
+[status]
+	showUntrackedFiles = all
+	submoduleSummary = true
+
+[log]
+	date = iso
+
+[transfer]
+	fsckobjects = true
+[receive]
+	fsckObjects = true
+
+[delta]
+	navigate = true
+	line-numbers = true
+	side-by-side = false
+	hyperlinks = true
+
+[interactive]
+	diffFilter = "command -v delta >/dev/null 2>&1 && delta --color-only || cat"
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
+[gpg]
+	program = gpg
+
+[url "git@github.com:"]
+	insteadOf = gh:
+
+[alias]
+	st = status --short --branch
+	co = checkout
+	ck = checkout
+	cb = checkout -b
+	br = branch
+	ci = commit
+	cm = commit -m
+	amend = commit --amend --no-edit
+	edit = commit --amend
+	unstage = reset HEAD --
+	undo = reset HEAD~ --soft
+	nuke = reset --hard HEAD
+	pushforce = push --force-with-lease
+	widas = push --force-with-lease
+	sync = !git fetch --all --prune && git pull --rebase --autostash
+	# Default branch of the remote, whatever it is called.
+	main = !git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'
+	cmain = !git checkout "$(git main)"
+	lg = log --color --graph --abbrev-commit --decorate --date=relative --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --all
+	last = log -1 HEAD --stat
+	today = log --since=midnight --author-date-order --pretty=format:'%C(yellow)%h%Creset %s'
+	contributors = shortlog --summary --numbered --email
+	branches = branch -a --sort=-committerdate --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) (%(color:green)%(committerdate:relative)%(color:reset))'
+	stale = "!git branch --merged | grep -vE '^\\*|master|main|develop' | xargs -r git branch -d"
+	wip = !git add --all && git commit -m 'WIP' --no-verify
+	unwip = reset HEAD~
+	# Who last touched each line, ignoring pure-formatting commits.
+	praise = blame -w -C -C -C
+
+[color "diff"]
+	meta = yellow bold
+	commit = green bold
+	frag = magenta bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse
+[color "branch"]
+	current = yellow reverse
+	local = yellow
+	remote = green
+[color "status"]
+	added = yellow
+	changed = green
+	untracked = cyan

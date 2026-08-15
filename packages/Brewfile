@@ -1,0 +1,94 @@
+# Core command line development environment.
+# Installed by ./setup-macos-workstation.sh (brew bundle --file packages/Brewfile).
+
+# --- Shell & terminal --------------------------------------------------------
+brew "zsh"
+brew "zsh-completions"
+brew "tmux"
+brew "coreutils"     # GNU ls/date/... prefixed with g
+brew "findutils"
+brew "gnu-sed"
+brew "grep"
+brew "gawk"
+brew "watch"
+brew "reattach-to-user-namespace"
+
+# --- Version control ---------------------------------------------------------
+brew "git"
+brew "git-lfs"
+brew "git-delta"     # pager used by home/.gitconfig
+brew "gh"
+brew "lazygit"
+brew "pre-commit"
+brew "gnupg"
+brew "pinentry-mac"  # lets gpg-agent prompt in the macOS keychain UI
+
+# --- Searching & navigation --------------------------------------------------
+brew "ripgrep"
+brew "fd"
+brew "fzf"
+brew "zoxide"
+brew "eza"
+brew "bat"
+brew "tree"
+brew "the_silver_searcher"
+
+# --- Data wrangling ----------------------------------------------------------
+brew "jq"
+brew "yq"
+brew "httpie"
+brew "curl"
+brew "wget"
+
+# --- Diagnostics -------------------------------------------------------------
+brew "htop"
+brew "btop"
+brew "ncdu"
+brew "hyperfine"
+brew "nmap"
+brew "mtr"
+brew "telnet"
+
+# --- Editors -----------------------------------------------------------------
+brew "vim"
+brew "neovim"
+
+# --- Build & scripting -------------------------------------------------------
+brew "make"
+brew "cmake"
+brew "just"
+brew "direnv"
+brew "shellcheck"
+brew "shfmt"
+brew "tldr"
+brew "neofetch"
+brew "openssl@3"
+brew "readline"
+brew "sqlite"
+brew "xz"
+brew "zlib"
+
+# --- Languages & toolchains --------------------------------------------------
+# Node is managed by nvm, Java/Maven/Gradle by SDKMAN and Rust by rustup;
+# the setup script installs those. Everything below is version-manager-free.
+brew "go"
+brew "python@3.12"
+brew "pipx"
+brew "uv"
+brew "rbenv"
+brew "ruby-build"
+brew "php"
+brew "composer"
+brew "deno"
+
+# --- Containers --------------------------------------------------------------
+# Colima + the Docker CLI is the default engine: no Docker Desktop licence
+# needed. Pass --docker-desktop to the setup script to use Docker Desktop.
+brew "docker"
+brew "docker-compose"
+brew "docker-buildx"
+brew "docker-credential-helper"
+brew "colima"
+brew "lazydocker"
+brew "dive"
+brew "ctop"

@@ -1,0 +1,56 @@
+# Global gitignore (core.excludesfile). Things that are never worth committing
+# in any repository — keep project-specific ignores in the project's own file.
+
+# --- macOS -------------------------------------------------------------------
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+
+# --- Linux -------------------------------------------------------------------
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# --- Windows -----------------------------------------------------------------
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# --- Editors & IDEs ----------------------------------------------------------
+.idea/
+*.iml
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+*.sublime-project
+*.sublime-workspace
+.nvimlog
+*.swp
+*.swo
+Session.vim
+.netrwhist
+tags
+.ropeproject
+
+# --- Tooling & local state ---------------------------------------------------
+.direnv/
+.envrc.local
+*.log
+.history/
+.cache/
+
+# --- Secrets -----------------------------------------------------------------
+# A backstop, not a strategy: .env belongs in a project .gitignore too.
+.env
+.env.local
+*.pem
+*.key
+!**/testdata/**/*.key
+.aws/credentials

@@ -1,0 +1,71 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  shellcheck:
+    name: Lint shell scripts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install shellcheck and shfmt
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq shellcheck shfmt
+
+      - name: shellcheck
+        run: shellcheck --external-sources --severity=warning install.sh setup-*.sh lib/*.sh macos/*.sh
+
+      - name: shfmt (formatting)
+        run: shfmt --diff --indent 2 --case-indent install.sh setup-*.sh lib/*.sh macos/*.sh
+
+  syntax:
+    name: Validate configuration files
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install zsh, tmux and vim
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq zsh tmux vim
+
+      - name: zsh syntax
+        run: zsh -n home/.zshrc
+
+      - name: bash-compatible fragments
+        run: bash -n home/.aliases home/.exports home/.functions
+
+      - name: git config parses
+        run: git config --file home/.gitconfig --list >/dev/null
+
+      - name: tmux config parses
+        run: tmux -f home/.tmux.conf start-server \; kill-server
+
+      - name: vim config parses
+        run: vim -es -u home/.vimrc -c 'qall!' </dev/null
+
+  dry-run:
+    name: Installer dry run
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: install.sh --dry-run
+        run: ./install.sh --dry-run --yes
+
+      - name: setup script --dry-run
+        run: |
+          if [ "$RUNNER_OS" = "macOS" ]; then
+            ./setup-macos-workstation.sh --dry-run --yes --list
+          else
+            ./setup-linux-workstation.sh --dry-run --yes --list
+          fi

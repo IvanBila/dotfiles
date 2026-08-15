@@ -1,0 +1,40 @@
+# GUI applications and fonts.
+# Skipped when --no-casks is passed to ./setup-macos-workstation.sh.
+
+# --- Editors & IDEs ----------------------------------------------------------
+cask "visual-studio-code"
+cask "jetbrains-toolbox"
+cask "sublime-text"
+
+# --- Terminals ---------------------------------------------------------------
+cask "iterm2"
+
+# --- Browsers ----------------------------------------------------------------
+cask "google-chrome"
+cask "firefox"
+
+# --- API, database and container clients -------------------------------------
+cask "postman"
+cask "tableplus"
+cask "wireshark"
+
+# --- Communication -----------------------------------------------------------
+cask "slack"
+cask "discord"
+cask "signal"
+cask "telegram"
+cask "zoom"
+
+# --- Utilities ---------------------------------------------------------------
+cask "rectangle"      # window tiling
+cask "raycast"        # spotlight replacement / launcher
+cask "obsidian"
+cask "vlc"
+cask "keka"           # archive utility
+cask "spotify"
+
+# --- Fonts -------------------------------------------------------------------
+cask "font-jetbrains-mono-nerd-font"
+cask "font-fira-code-nerd-font"
+cask "font-hack-nerd-font"
+cask "font-meslo-lg-nerd-font"
