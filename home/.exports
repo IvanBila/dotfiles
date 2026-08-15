@@ -1,0 +1,123 @@
+# shellcheck shell=bash
+#
+# Environment variables and PATH. Sourced by both zsh and bash, so keep the
+# syntax POSIX-compatible.
+
+# ---------------------------------------------------------------------------
+# PATH
+# ---------------------------------------------------------------------------
+
+# prepend_path <dir> [force] — add to the front of PATH if it is not already
+# there. Directories that do not exist are skipped unless force is given.
+prepend_path() {
+  case ":${PATH}:" in
+    *":$1:"*) return 0 ;;
+  esac
+  if [ -d "$1" ] || [ -n "${2:-}" ]; then
+    PATH="$1:${PATH}"
+  fi
+}
+
+# Homebrew (Apple Silicon, Intel and Linuxbrew locations).
+for brew_prefix in /opt/homebrew /usr/local /home/linuxbrew/.linuxbrew; do
+  if [ -x "${brew_prefix}/bin/brew" ]; then
+    eval "$("${brew_prefix}/bin/brew" shellenv)"
+    break
+  fi
+done
+unset brew_prefix
+
+prepend_path "/usr/local/go/bin"
+prepend_path "${HOME}/go/bin"
+prepend_path "${HOME}/.cargo/bin"
+prepend_path "${HOME}/.rbenv/bin"
+prepend_path "${HOME}/.rbenv/shims"
+prepend_path "${HOME}/.config/composer/vendor/bin"
+prepend_path "${HOME}/.composer/vendor/bin"
+prepend_path "${HOME}/.krew/bin"
+prepend_path "${HOME}/.local/bin" force
+prepend_path "${HOME}/bin"
+
+# Homebrew keg-only clients (macOS).
+if command -v brew >/dev/null 2>&1; then
+  prepend_path "$(brew --prefix)/opt/libpq/bin"
+  prepend_path "$(brew --prefix)/opt/mysql-client/bin"
+fi
+
+export PATH
+
+# ---------------------------------------------------------------------------
+# Core
+# ---------------------------------------------------------------------------
+
+export LANG="${LANG:-en_US.UTF-8}"
+# LC_ALL is deliberately not set: it overrides every category and warns loudly
+# on hosts where the locale has not been generated.
+
+export EDITOR="vim"
+export VISUAL="$EDITOR"
+command -v nvim >/dev/null 2>&1 && { export EDITOR="nvim"; export VISUAL="nvim"; }
+export SUDO_EDITOR="$EDITOR"
+export GIT_EDITOR="$EDITOR"
+
+# less: colours survive, no clearing on exit, case-insensitive search.
+export LESS="-R -F -X -i -M"
+export PAGER="less"
+export MANPAGER="less -R --use-color -Dd+r -Du+b"
+
+# gpg needs to know which terminal to prompt on.
+GPG_TTY="$(tty 2>/dev/null || true)"
+export GPG_TTY
+
+# ---------------------------------------------------------------------------
+# History (zsh sets its own options in .zshrc)
+# ---------------------------------------------------------------------------
+
+export HISTSIZE=100000
+export SAVEHIST=100000
+export HISTFILE="${HOME}/.zsh_history"
+# Never record secrets or trivial noise.
+export HISTIGNORE="ls:cd:cd -:pwd:exit:clear:history:* --help:*API_KEY*:*TOKEN*:*SECRET*:*PASSWORD*"
+export HISTCONTROL="ignoreboth:erasedups"
+
+# ---------------------------------------------------------------------------
+# Tooling
+# ---------------------------------------------------------------------------
+
+# Docker: BuildKit is the default in modern engines but not in every CLI path.
+export DOCKER_BUILDKIT=1
+export COMPOSE_DOCKER_CLI_BUILD=1
+export BUILDKIT_PROGRESS=plain
+
+# Go
+export GOPATH="${HOME}/go"
+export GOBIN="${GOPATH}/bin"
+
+# Node
+export NVM_DIR="${HOME}/.nvm"
+export NODE_REPL_HISTORY="${HOME}/.node_history"
+export npm_config_fund=false
+
+# Python
+export PYTHONDONTWRITEBYTECODE=1
+export PIPX_BIN_DIR="${HOME}/.local/bin"
+export VIRTUAL_ENV_DISABLE_PROMPT=1   # the prompt renders venvs itself
+
+# Java
+export SDKMAN_DIR="${HOME}/.sdkman"
+
+# Ruby
+export RBENV_ROOT="${HOME}/.rbenv"
+
+# fzf: respect .gitignore and show a preview.
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git 2>/dev/null || find . -type f'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border --info=inline"
+
+export BAT_THEME="ansi"
+
+# Kubernetes: keep contexts out of the default file when they are per-project.
+export KUBE_EDITOR="$EDITOR"
+
+# Silence macOS' "the default interactive shell is now zsh" nag.
+export BASH_SILENCE_DEPRECATION_WARNING=1

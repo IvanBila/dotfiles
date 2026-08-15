@@ -1,0 +1,37 @@
+# Default formatting rules for editors that support EditorConfig.
+# A project's own .editorconfig takes precedence over this one.
+
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 4
+
+[*.{js,jsx,ts,tsx,json,jsonc,css,scss,less,html,vue,svelte,yml,yaml,toml}]
+indent_size = 2
+
+[*.{sh,bash,zsh}]
+indent_size = 2
+
+[*.{go,mk}]
+indent_style = tab
+
+[Makefile]
+indent_style = tab
+
+[*.{md,markdown}]
+trim_trailing_whitespace = false   # two trailing spaces mean a line break
+
+[*.{php,java,kt}]
+indent_size = 4
+
+[*.py]
+indent_size = 4
+max_line_length = 88
+
+[*.{diff,patch}]
+trim_trailing_whitespace = false

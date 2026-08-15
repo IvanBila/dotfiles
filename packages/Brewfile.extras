@@ -1,0 +1,28 @@
+# Cloud, Kubernetes and database tooling.
+# Installed unless --minimal is passed to ./setup-macos-workstation.sh.
+
+tap "hashicorp/tap"
+
+# --- Kubernetes --------------------------------------------------------------
+brew "kubernetes-cli"
+brew "kubectx"
+brew "helm"
+brew "k9s"
+brew "kind"
+brew "stern"
+brew "kustomize"
+
+# --- Cloud & infrastructure --------------------------------------------------
+brew "awscli"
+brew "hashicorp/tap/terraform"
+brew "ansible"
+brew "flyctl"
+
+# --- Databases ---------------------------------------------------------------
+# Clients only — run the servers themselves in containers.
+brew "libpq"          # psql, pg_dump, ... (keg-only; PATH set in home/.exports)
+brew "mysql-client"
+brew "redis"
+brew "pgcli"
+brew "mycli"
+brew "sqlite"
