@@ -21,19 +21,26 @@ source "${SCRIPT_DIR}/lib/shell.sh"
 
 MODULES=(core brew extras casks shell docker node python java rust defaults)
 
-declare -A MODULE_DESC=(
-  [core]="Xcode Command Line Tools, Rosetta 2 and Homebrew"
-  [brew]="Core CLI toolchain from packages/Brewfile"
-  [extras]="Cloud, Kubernetes, platform CLIs and database tooling from packages/Brewfile.extras"
-  [casks]="GUI applications and Nerd Fonts from packages/Brewfile.casks"
-  [shell]="oh-my-zsh, spaceship prompt, autosuggestions, syntax highlighting"
-  [docker]="Container runtime (Colima by default, or Docker Desktop)"
-  [node]="nvm, Node.js LTS, corepack (yarn/pnpm) and global CLIs"
-  [python]="pipx-managed Python tooling (poetry, ruff, black, pre-commit)"
-  [java]="SDKMAN with the current Java LTS, Maven and Gradle"
-  [rust]="rustup, cargo, clippy, rustfmt"
-  [defaults]="Opinionated macOS system defaults (opt-in via --defaults)"
-)
+# macOS still ships bash 3.2, which has no associative arrays: `declare -A`
+# there is parsed as an indexed array and dies on the first subscript with
+# "core: unbound variable". This script is what installs a newer bash in the
+# first place, so it has to run on the stock one — hence a lookup function.
+module_desc() {
+  case "$1" in
+    core) printf '%s' "Xcode Command Line Tools, Rosetta 2 and Homebrew" ;;
+    brew) printf '%s' "Core CLI toolchain from packages/Brewfile" ;;
+    extras) printf '%s' "Cloud, Kubernetes, platform CLIs and database tooling from packages/Brewfile.extras" ;;
+    casks) printf '%s' "GUI applications and Nerd Fonts from packages/Brewfile.casks" ;;
+    shell) printf '%s' "oh-my-zsh, spaceship prompt, autosuggestions, syntax highlighting" ;;
+    docker) printf '%s' "Container runtime (Colima by default, or Docker Desktop)" ;;
+    node) printf '%s' "nvm, Node.js LTS, corepack (yarn/pnpm) and global CLIs" ;;
+    python) printf '%s' "pipx-managed Python tooling (poetry, ruff, black, pre-commit)" ;;
+    java) printf '%s' "SDKMAN with the current Java LTS, Maven and Gradle" ;;
+    rust) printf '%s' "rustup, cargo, clippy, rustfmt" ;;
+    defaults) printf '%s' "Opinionated macOS system defaults (opt-in via --defaults)" ;;
+    *) printf '%s' "$1" ;;
+  esac
+}
 
 # `defaults` mutates system preferences, so it is opt-in rather than opt-out.
 SKIP_MODULES="defaults"
@@ -64,7 +71,7 @@ list_modules() {
   printf '%sAvailable modules%s\n' "$C_BOLD" "$C_RESET"
   local m
   for m in "${MODULES[@]}"; do
-    printf '  %-9s %s\n' "$m" "${MODULE_DESC[$m]}"
+    printf '  %-9s %s\n' "$m" "$(module_desc "$m")"
   done
 }
 
@@ -352,7 +359,7 @@ main() {
   local module ran=() failed=()
   for module in "${MODULES[@]}"; do
     if selected "$module"; then
-      header "${module} — ${MODULE_DESC[$module]}"
+      header "${module} — $(module_desc "$module")"
       if "module_${module}"; then
         ran+=("$module")
       else
