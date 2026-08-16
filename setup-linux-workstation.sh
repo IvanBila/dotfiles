@@ -41,7 +41,7 @@ declare -A MODULE_DESC=(
   [ruby]="rbenv and ruby-build"
   [db]="Database clients (psql, mariadb, redis, sqlite, pgcli, mycli)"
   [k8s]="kubectl, helm, k9s, kind, kubectx/kubens"
-  [cloud]="AWS CLI v2, Terraform, Ansible"
+  [cloud]="AWS, gcloud, Terraform, Ansible and the deploy CLIs (supabase, firebase, vercel, heroku, eas)"
   [editors]="Visual Studio Code"
   [apps]="GUI apps: browsers, Slack, Discord, Postman, Signal, VLC"
   [fonts]="JetBrains Mono / FiraCode Nerd Fonts and powerline fonts"
@@ -250,8 +250,9 @@ module_node() {
     corepack enable
     corepack prepare yarn@stable pnpm@latest --activate
   fi
+  # Deploy CLIs (vercel, firebase, heroku, eas) live in the cloud module.
   npm install -g npm@latest typescript ts-node tsx eslint prettier \
-    serve nodemon npm-check-updates vercel
+    serve nodemon npm-check-updates
   set -eu
 }
 
@@ -440,12 +441,26 @@ module_cloud() {
     rm -rf "$tmp"
   fi
 
+  # Google Cloud CLI. The gke auth plugin is what kubectl needs to talk to GKE.
+  add_apt_repo google-cloud \
+    "https://packages.cloud.google.com/apt/doc/apt-key.gpg" \
+    "deb [arch=$(deb_arch) signed-by=${KEYRING_DIR}/google-cloud.gpg] https://packages.cloud.google.com/apt cloud-sdk main" &&
+    apt_install google-cloud-cli google-cloud-cli-gke-gcloud-auth-plugin
+
   add_apt_repo hashicorp \
     "https://apt.releases.hashicorp.com/gpg" \
     "deb [arch=$(deb_arch) signed-by=${KEYRING_DIR}/hashicorp.gpg] https://apt.releases.hashicorp.com $(ubuntu_codename) main" &&
     apt_install terraform
 
   apt_install ansible
+
+  # Supabase publishes .deb packages; a global npm install is explicitly
+  # unsupported upstream, so this one does not go through npm_global_install.
+  install_deb_from_github "supabase/cli" "supabase_.*_linux_$(deb_arch)\.deb\$" supabase
+
+  # The remaining platform CLIs only ship on npm. `expo-cli` is deprecated:
+  # eas-cli covers builds and submissions, and projects run `npx expo` locally.
+  npm_global_install vercel firebase-tools heroku eas-cli
 }
 
 module_editors() {

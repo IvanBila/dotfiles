@@ -17,6 +17,18 @@ brew "awscli"
 brew "hashicorp/tap/terraform"
 brew "ansible"
 brew "flyctl"
+# The Google Cloud CLI is only packaged as a cask, but it is a command line
+# tool, so it belongs here rather than in Brewfile.casks.
+cask "gcloud-cli"
+
+# --- Application platforms ---------------------------------------------------
+# The Linux script installs the npm-only ones through npm; on macOS every one
+# of these has a formula, which keeps them out of the nvm-managed global set.
+brew "supabase"
+brew "firebase-cli"
+brew "vercel"
+brew "heroku"
+brew "eas-cli"        # Expo: `eas` for builds, `npx expo` inside a project
 
 # --- Databases ---------------------------------------------------------------
 # Clients only — run the servers themselves in containers.

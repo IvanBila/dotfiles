@@ -214,6 +214,12 @@ if [[ ! -d "$_dotfiles_completions" ]]; then
   command -v helm >/dev/null 2>&1 && helm completion zsh >"${_dotfiles_completions}/_helm"
   command -v gh >/dev/null 2>&1 && gh completion -s zsh >"${_dotfiles_completions}/_gh"
   command -v terraform >/dev/null 2>&1 && terraform -install-autocomplete 2>/dev/null
+  # Recent Supabase releases moved from `completion zsh` to `--completions zsh`.
+  if command -v supabase >/dev/null 2>&1; then
+    supabase --completions zsh >"${_dotfiles_completions}/_supabase" 2>/dev/null ||
+      supabase completion zsh >"${_dotfiles_completions}/_supabase" 2>/dev/null ||
+      command rm -f "${_dotfiles_completions}/_supabase"
+  fi
 fi
 fpath=("$_dotfiles_completions" $fpath)
 unset _dotfiles_completions
@@ -225,6 +231,22 @@ if [[ -n ${ZDOTDIR:-$HOME}/.zcompdump(#qN.mh+24) ]]; then
 else
   compinit -C
 fi
+
+# The Google Cloud SDK ships its own PATH and completion snippets. They call
+# compdef, so they have to come after compinit. Homebrew's cask, the apt
+# package, the snap and a manual tarball each land somewhere different.
+for _gcloud_dir in \
+  "${HOMEBREW_PREFIX:-/opt/homebrew}/share/google-cloud-sdk" \
+  /usr/share/google-cloud-sdk \
+  /snap/google-cloud-cli/current \
+  "${HOME}/google-cloud-sdk"; do
+  if [[ -f "${_gcloud_dir}/completion.zsh.inc" ]]; then
+    [[ -f "${_gcloud_dir}/path.zsh.inc" ]] && source "${_gcloud_dir}/path.zsh.inc"
+    source "${_gcloud_dir}/completion.zsh.inc"
+    break
+  fi
+done
+unset _gcloud_dir
 
 # ---------------------------------------------------------------------------
 # Machine-specific overrides (secrets, work config, one-off PATH entries)

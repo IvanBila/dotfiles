@@ -24,7 +24,7 @@ MODULES=(core brew extras casks shell docker node python java rust defaults)
 declare -A MODULE_DESC=(
   [core]="Xcode Command Line Tools, Rosetta 2 and Homebrew"
   [brew]="Core CLI toolchain from packages/Brewfile"
-  [extras]="Cloud, Kubernetes and database tooling from packages/Brewfile.extras"
+  [extras]="Cloud, Kubernetes, platform CLIs and database tooling from packages/Brewfile.extras"
   [casks]="GUI applications and Nerd Fonts from packages/Brewfile.casks"
   [shell]="oh-my-zsh, spaceship prompt, autosuggestions, syntax highlighting"
   [docker]="Container runtime (Colima by default, or Docker Desktop)"
@@ -264,8 +264,9 @@ module_node() {
     corepack enable
     corepack prepare yarn@stable pnpm@latest --activate
   fi
+  # Deploy CLIs (vercel, firebase, heroku, eas) come from Brewfile.extras.
   npm install -g npm@latest typescript ts-node tsx eslint prettier \
-    serve nodemon npm-check-updates vercel
+    serve nodemon npm-check-updates
   set -eu
 }
 

@@ -166,6 +166,54 @@ selected() {
 }
 
 # ---------------------------------------------------------------------------
+# Node
+# ---------------------------------------------------------------------------
+
+# load_nvm — put an nvm-managed Node on PATH for the rest of the script.
+# Setup scripts never read ~/.zshrc, so a Node installed by the node module
+# earlier in the same run is otherwise invisible to later modules.
+load_nvm() {
+  has npm && return 0
+  local nvm_dir="${NVM_DIR:-${HOME}/.nvm}"
+  [[ -s "${nvm_dir}/nvm.sh" ]] || return 1
+  # nvm's own scripts are not written for `set -euo pipefail`.
+  set +eu
+  # shellcheck disable=SC1091
+  . "${nvm_dir}/nvm.sh"
+  nvm use default >/dev/null 2>&1
+  set -eu
+  has npm
+}
+
+# npm_global_install <packages...> — install the globals that are missing.
+# A package that fails warns rather than aborting the module.
+npm_global_install() {
+  if [[ "$DRY_RUN" == "true" ]]; then
+    printf '%s  would run:%s npm install -g %s\n' "$C_DIM" "$C_RESET" "$*"
+    return 0
+  fi
+  if ! load_nvm; then
+    warn "npm not available; skipping global packages: $*"
+    return 0
+  fi
+
+  local installed missing=() pkg
+  installed="$(npm ls -g --depth=0 --parseable 2>/dev/null || true)"
+  for pkg in "$@"; do
+    if printf '%s\n' "$installed" | grep -qE "/${pkg}\$"; then
+      skip "npm ${pkg} already installed"
+    else
+      missing+=("$pkg")
+    fi
+  done
+  [[ ${#missing[@]} -eq 0 ]] && return 0
+
+  info "Installing npm globals: ${missing[*]}"
+  npm install -g "${missing[@]}" || warn "npm install -g failed: ${missing[*]}"
+  return 0
+}
+
+# ---------------------------------------------------------------------------
 # Downloads
 # ---------------------------------------------------------------------------
 

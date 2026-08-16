@@ -25,7 +25,8 @@ installs.
 | Git | git, git-lfs, delta, lazygit, GitHub CLI, pre-commit, a large alias set |
 | Containers | Docker Engine + Compose v2 + Buildx (Linux), Colima or Docker Desktop (macOS), lazydocker, dive, ctop |
 | Kubernetes | kubectl, helm, k9s, kind, kubectx/kubens, stern |
-| Cloud | AWS CLI v2, Terraform, Ansible |
+| Cloud | AWS CLI v2, Google Cloud CLI, Terraform, Ansible |
+| Platforms | Supabase, Firebase, Vercel, Heroku and Expo (EAS) CLIs, GitHub CLI |
 | Languages | Node (nvm), Python (pipx + uv + poetry), Go, Rust (rustup), Java/Maven/Gradle (SDKMAN), PHP + Composer + Laravel, Ruby (rbenv) |
 | Databases | psql, mysql/mariadb, redis, sqlite clients plus pgcli and mycli |
 | Editors | vim (vim-plug), Neovim, VS Code, JetBrains Toolbox and Sublime on macOS |
@@ -55,7 +56,7 @@ them per-project with `docker compose`, and keep only the clients locally.
 │   └── shell.sh                  oh-my-zsh and prompt setup
 ├── packages/                     Homebrew bundles
 │   ├── Brewfile                  core CLI toolchain
-│   ├── Brewfile.extras           cloud, Kubernetes, databases
+│   ├── Brewfile.extras           cloud, Kubernetes, platform CLIs, databases
 │   └── Brewfile.casks            GUI applications and fonts
 └── macos/defaults.sh             opinionated macOS system preferences
 ```
@@ -141,6 +142,53 @@ Desktop; nothing else in the configuration changes.
 Useful aliases: `dc` (compose), `dcu`/`dcd` (up/down), `dcl` (logs), `dps`
 (formatted `ps`), `dprune` (reclaim disk), `dsh <container>` (shell inside a
 container), `ld` (lazydocker).
+
+---
+
+## Cloud and platform CLIs
+
+The `cloud` module (Linux) and `packages/Brewfile.extras` (macOS) install the
+same set of tools by whichever route each vendor actually supports:
+
+| CLI | Command | Linux | macOS |
+| --- | --- | --- | --- |
+| AWS | `aws` | official v2 installer | `awscli` formula |
+| Google Cloud | `gcloud` | `cloud-sdk` apt repository | `gcloud-cli` cask |
+| GitHub | `gh` | `cli.github.com` apt repository (`cli` module) | `gh` formula |
+| Supabase | `supabase` | `.deb` from GitHub releases | `supabase` formula |
+| Firebase | `firebase` | `firebase-tools` on npm | `firebase-cli` formula |
+| Vercel | `vercel` | `vercel` on npm | `vercel` formula |
+| Heroku | `heroku` | `heroku` on npm | `heroku` formula |
+| Expo | `eas` | `eas-cli` on npm | `eas-cli` formula |
+
+A couple of choices worth knowing about:
+
+- **Supabase is never installed from npm.** Upstream does not support a global
+  npm install, so Linux takes the published `.deb` instead.
+- **`expo-cli` is deprecated.** `eas` handles builds and submissions; inside a
+  project the CLI is the local one, which is why `.aliases` maps `expo` to
+  `npx expo`.
+- On Linux the npm-only CLIs are global packages of the nvm-managed Node, so
+  they need reinstalling after switching to a Node version you have not used
+  before: `./setup-linux-workstation.sh --only cloud`.
+- `google-cloud-cli-gke-gcloud-auth-plugin` comes along with `gcloud` on Linux,
+  because `kubectl` cannot authenticate against GKE without it.
+
+Signing in is deliberately left to you — nothing here writes a credential:
+
+```bash
+aws configure sso           # or: aws configure
+gcloud auth login --update-adc
+gh auth login
+supabase login
+firebase login
+vercel login
+heroku login
+eas login
+```
+
+Handy aliases: `awswho` / `gcwho` (which identity am I using), `gcproj`
+(set the active project), `sb`, `fb`, `vc`, `vcp` (`vercel deploy --prod`).
 
 ---
 
