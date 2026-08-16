@@ -370,7 +370,10 @@ main() {
   done
 
   header "Done"
-  success "Modules completed: ${ran[*]}"
+  # ${ran[*]:-} rather than ${ran[*]}: on bash 3.2 expanding an empty array
+  # under `set -u` is itself an "unbound variable" error, which would turn a
+  # mistyped --only into a crash instead of an empty summary line.
+  success "Modules completed: ${ran[*]:-}"
   [[ ${#failed[@]} -gt 0 ]] && warn "Modules with errors: ${failed[*]}"
   cat <<EOF
 
