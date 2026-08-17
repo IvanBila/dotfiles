@@ -113,6 +113,35 @@ alias kgs='kubectl get svc'
 alias kaf='kubectl apply -f'
 
 # ---------------------------------------------------------------------------
+# Cloud & deploy
+# ---------------------------------------------------------------------------
+
+# Which account am I about to deploy with? Worth checking before anything else.
+alias awswho='aws sts get-caller-identity'
+alias gcwho='gcloud auth list'
+
+# No short `gc*` alias for gcloud itself: oh-my-zsh's git plugin owns that
+# prefix, and silently shadowing `git commit` is not worth three keystrokes.
+alias gcproj='gcloud config set project'
+alias gclogin='gcloud auth login --update-adc'
+
+alias sb='supabase'
+alias sbstart='supabase start'
+alias sbstatus='supabase status'
+alias sbdiff='supabase db diff'
+
+alias fb='firebase'
+alias fbd='firebase deploy'
+alias fbe='firebase emulators:start'
+
+alias vc='vercel'
+alias vcd='vercel deploy'
+alias vcp='vercel deploy --prod'
+
+# Expo: eas builds and submits, `expo` itself is meant to run from the project.
+alias expo='npx expo'
+
+# ---------------------------------------------------------------------------
 # Languages & frameworks
 # ---------------------------------------------------------------------------
 
